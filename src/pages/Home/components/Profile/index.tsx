@@ -11,6 +11,7 @@ import {
 
 export function Profile() {
   const { author } = useContext(BlogContext)
+  console.log(author.avatar)
 
   return (
     <ProfileContainer>

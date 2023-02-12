@@ -15,7 +15,7 @@ export function PostList() {
   return (
     <PostListContainer>
       {blogPosts.map((post) => (
-        <PostCard key={post.id} to="/post">
+        <PostCard key={post.id} to={`/post/${post.number}`}>
           <PostCardHeader>
             <strong>{post.title}</strong>
             <span>

@@ -69,4 +69,24 @@ export const PostData = styled.span`
 export const BodyContainer = styled.div`
   width: 100%;
   padding: 2.5rem 2rem;
+  font-size: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  pre {
+    background-color: ${(props) => props.theme.colors['base-profile']};
+    padding: 1rem;
+    border-radius: 6px;
+  }
+
+  a {
+    color: ${(props) => props.theme.colors.blue};
+  }
 `

@@ -12,6 +12,7 @@ interface Author {
 }
 
 interface BlogPosts {
+  number: number
   id: number
   title: string
   body: string
@@ -48,7 +49,7 @@ export function BlogContextProvider({ children }: BlogContextProviderProps) {
     async function fetchAuthor() {
       const response = await api.get('/users/RafaelXau')
       const {
-        avatar,
+        avatar_url: avatar,
         name,
         login,
         bio,

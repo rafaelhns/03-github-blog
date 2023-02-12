@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { Icon } from '../../components/Icon'
+import { api } from '../../lib/api'
 import {
   BodyContainer,
   NavLinks,
@@ -11,7 +13,29 @@ import {
   TitleContainer,
 } from './styles'
 
+interface BlogPost {
+  title: string
+  body: string
+  comments: number
+}
+
 export function Post() {
+  const { postId } = useParams()
+  const [blogPost, setBlogPost] = useState<BlogPost>({} as BlogPost)
+
+  useEffect(() => {
+    async function fetchBlogPost() {
+      const response = await api.get(
+        `/repos/rafaelxau/03-github-blog/issues/${postId}`,
+      )
+
+      const { title, body, comments } = response.data
+      setBlogPost({ title, body, comments })
+    }
+
+    fetchBlogPost()
+  }, [postId])
+
   return (
     <PostContainer>
       <TitleContainer>
@@ -19,12 +43,12 @@ export function Post() {
           <NavLink to="/">
             <Icon variant="chevron-left" size={12} /> VOLTAR
           </NavLink>
-          <NavLink to="/">
+          <a href="/" target="_blank">
             VER NO GITHUB <Icon variant="link" size={12} />
-          </NavLink>
+          </a>
         </NavLinks>
 
-        <Title>Blog post title</Title>
+        <Title>{blogPost.title}</Title>
 
         <PostDataContainer>
           <PostData>
@@ -36,13 +60,15 @@ export function Post() {
           </PostData>
           <PostData>
             <Icon variant="comment" size={18} />
-            Postado em 10 de Junho de 2021
+            {`${blogPost.comments} comentário${
+              blogPost.comments === 1 ? '' : 's'
+            }`}
           </PostData>
         </PostDataContainer>
       </TitleContainer>
 
       <BodyContainer>
-        <ReactMarkdown># Hello, *world*!</ReactMarkdown>
+        <ReactMarkdown>{blogPost.body}</ReactMarkdown>
       </BodyContainer>
     </PostContainer>
   )
