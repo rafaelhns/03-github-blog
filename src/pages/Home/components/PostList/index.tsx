@@ -10,11 +10,11 @@ import {
 } from './styles'
 
 export function PostList() {
-  const { blogPosts } = useContext(BlogContext)
+  const { listedBlogPosts } = useContext(BlogContext)
 
   return (
     <PostListContainer>
-      {blogPosts.map((post) => (
+      {listedBlogPosts.map((post) => (
         <PostCard key={post.id} to={`/post/${post.number}`}>
           <PostCardHeader>
             <strong>{post.title}</strong>

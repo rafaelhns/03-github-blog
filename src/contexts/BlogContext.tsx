@@ -21,8 +21,9 @@ interface BlogPosts {
 
 interface BlogContextType {
   author: Author
-  blogPosts: BlogPosts[]
+  listedBlogPosts: BlogPosts[]
   totalBlogPosts: number
+  filterPosts: (query: string) => void
 }
 
 export const BlogContext = createContext({} as BlogContextType)
@@ -42,8 +43,12 @@ export function BlogContextProvider({ children }: BlogContextProviderProps) {
     profileUrl: '',
   })
 
+  const [postFilter, setPostFilter] = useState<string>('')
   const [blogPosts, setBlogPosts] = useState<BlogPosts[]>([])
   const totalBlogPosts = blogPosts.length
+  const listedBlogPosts = blogPosts.filter(
+    (post) => post.title.includes(postFilter) || post.body.includes(postFilter),
+  )
 
   useEffect(() => {
     async function fetchAuthor() {
@@ -81,8 +86,14 @@ export function BlogContextProvider({ children }: BlogContextProviderProps) {
     fetchPosts()
   }, [])
 
+  function filterPosts(query: string) {
+    setPostFilter(query)
+  }
+
   return (
-    <BlogContext.Provider value={{ author, blogPosts, totalBlogPosts }}>
+    <BlogContext.Provider
+      value={{ author, listedBlogPosts, filterPosts, totalBlogPosts }}
+    >
       {children}
     </BlogContext.Provider>
   )
