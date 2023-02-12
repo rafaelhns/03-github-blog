@@ -18,6 +18,7 @@ export const ProfilePicute = styled.img`
 `
 
 export const ProfileInfo = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

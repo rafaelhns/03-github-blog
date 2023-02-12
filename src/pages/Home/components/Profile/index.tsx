@@ -1,4 +1,6 @@
+import { useContext } from 'react'
 import { Icon } from '../../../../components/Icon'
+import { BlogContext } from '../../../../contexts/BlogContext'
 import {
   ProfileContainer,
   ProfileInfo,
@@ -8,34 +10,31 @@ import {
 } from './styles'
 
 export function Profile() {
+  const { author } = useContext(BlogContext)
+
   return (
     <ProfileContainer>
-      <ProfilePicute
-        alt="Profile Picture"
-        src="https://avatars.githubusercontent.com/u/55418068?v=4"
-      />
+      <ProfilePicute alt="Profile Picture" src={author.avatar} />
 
       <ProfileInfo>
-        <GithubProfile href="#">
+        <GithubProfile href={author.profileUrl} target="_blank">
           GITHUB
           <Icon variant="link" size={12} />
         </GithubProfile>
 
-        <strong className="name">Cameron Williamson</strong>
-        <p className="description">
-          Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
-          viverra massa quam dignissim aenean malesuada suscipit. Nunc, volutpat
-          pulvinar vel mass.
-        </p>
+        <strong className="name">{author.name}</strong>
+        <p className="description">{author.bio}</p>
         <div className="data">
           <ProfileData>
-            <Icon size={18} variant="github" /> RafaelXau
+            <Icon size={18} variant="github" /> {author.login}
           </ProfileData>
           <ProfileData>
-            <Icon size={18} variant="building" /> Rocketseat
+            <Icon size={18} variant="building" />{' '}
+            {author.company ? author.company : 'sem empresa'}
           </ProfileData>
           <ProfileData>
-            <Icon size={18} variant="user-group" /> 1 seguidor
+            <Icon size={18} variant="user-group" />
+            {`${author.followers} seguidore${author.followers > 1 && 's'}`}
           </ProfileData>
         </div>
       </ProfileInfo>
