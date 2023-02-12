@@ -5,16 +5,17 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    line-height: 1.6;
   }
 
   :focus {
     outline: none;
-    box-shadow: 0 0 0 2px ${(props) => props.theme.blue};
+    box-shadow: 0 0 0 2px ${(props) => props.theme.colors.blue};
   }
 
   body {
-    background: ${(props) => props.theme['base-background']};
-    color: ${(props) => props.theme['base-text']};
+    background: ${(props) => props.theme.colors['base-background']};
+    color: ${(props) => props.theme.colors['base-text']};
     -webkit-font-smoothing: antialiased;
   }
 
