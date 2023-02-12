@@ -17,6 +17,7 @@ interface BlogPost {
   title: string
   body: string
   comments: number
+  urlGithub: string
 }
 
 export function Post() {
@@ -29,8 +30,8 @@ export function Post() {
         `/repos/rafaelxau/03-github-blog/issues/${postId}`,
       )
 
-      const { title, body, comments } = response.data
-      setBlogPost({ title, body, comments })
+      const { title, body, comments, html_url: urlGithub } = response.data
+      setBlogPost({ title, body, comments, urlGithub })
     }
 
     fetchBlogPost()
@@ -43,7 +44,7 @@ export function Post() {
           <NavLink to="/">
             <Icon variant="chevron-left" size={12} /> VOLTAR
           </NavLink>
-          <a href="/" target="_blank">
+          <a href={blogPost.urlGithub} target="_blank" rel="noreferrer">
             VER NO GITHUB <Icon variant="link" size={12} />
           </a>
         </NavLinks>
