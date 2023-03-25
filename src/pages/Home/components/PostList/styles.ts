@@ -4,8 +4,7 @@ import styled from 'styled-components'
 export const PostListContainer = styled.section`
   width: 100%;
   display: grid;
-  grid-auto-columns: minmax(0, 1fr);
-  grid-auto-flow: column;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 2rem;
 `
 
