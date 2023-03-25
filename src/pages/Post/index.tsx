@@ -18,6 +18,8 @@ interface BlogPost {
   body: string
   comments: number
   urlGithub: string
+  userName: string
+  createdAt: Date
 }
 
 export function Post() {
@@ -30,8 +32,23 @@ export function Post() {
         `/repos/rafaelxau/03-github-blog/issues/${postId}`,
       )
 
-      const { title, body, comments, html_url: urlGithub } = response.data
-      setBlogPost({ title, body, comments, urlGithub })
+      const {
+        title,
+        body,
+        comments,
+        user,
+        html_url: urlGithub,
+        created_at: createdAt,
+      } = response.data
+
+      setBlogPost({
+        title,
+        body,
+        comments,
+        urlGithub,
+        userName: user.login,
+        createdAt: new Date(createdAt.replace('T', ' ')),
+      })
     }
 
     fetchBlogPost()
@@ -53,11 +70,16 @@ export function Post() {
 
         <PostDataContainer>
           <PostData>
-            <Icon variant="github" size={18} /> RafaelXau
+            <Icon variant="github" size={18} /> {blogPost.userName}
           </PostData>
           <PostData>
             <Icon variant="calendar" size={18} />
-            Postado em 10 de Junho de 2021
+            Posta do em{' '}
+            {blogPost.createdAt?.toLocaleDateString('pt-BR', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
           </PostData>
           <PostData>
             <Icon variant="comment" size={18} />
